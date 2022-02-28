@@ -19,7 +19,7 @@ device = 'cuda' if cuda.is_available() else 'cpu'
 '''
 
 class categorize():
-  def __init__(self, text, MAX_LEN = 128, TEST_BATCH_SIZE = 5, weightpath = '/content/drive/MyDrive/PS/Files/models/pytorch_distilbert_news_v001.bin'):
+  def __init__(self, text, MAX_LEN = 128, TEST_BATCH_SIZE = 5, weightpath = 'D:/My Documents/BITS Goa/PS1/Pipeline/Master/civic_watch/backend/pipeline/categorize/pytorch_distilbert_news_v001.bin'):
     if type(text) == list:
       self.textdf = pd.DataFrame()
       self.textdf['text'] = text
@@ -69,3 +69,7 @@ class categorize():
       returnable.append(LabelSeries[np.argmax(i) == LabelSeries.Integer].Category.values[0])
 
     return returnable
+    
+  def addTopic(self):
+    for idx, row in tqdm(df.iterrows()):
+      df.loc[idx, "topic"] = predict(row['articleHead'])[0]
